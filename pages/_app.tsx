@@ -41,6 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <RainbowKitProvider chains={chains}>
       <ToastContainer />
         <GraphPovider value={graphClient}>
+          <ToastContainer />
           <Component {...pageProps} />
         </GraphPovider>
       </RainbowKitProvider>
