@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.13",
+    "@polybase/auth": "^0.3.38",
+    "@polybase/client": "^0.3.38",
+    "@polybase/react": "^0.3.38",
     "@rainbow-me/rainbowkit": "^0.12.4",
     "@types/node": "18.15.8",
     "@types/react": "18.0.29",
