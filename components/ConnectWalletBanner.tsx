@@ -1,0 +1,21 @@
+import Image from "next/image";
+import React from "react";
+
+export default function ConnectWalletBanner() {
+  return (
+    <div className="bg-white shadow-sm w-full mt-5 rounded-xl flex items-center p-7 px-10">
+      <Image
+        src="/images/icon_no_login.png"
+        alt="icon_no_login"
+        width={120}
+        height={0}
+      />
+      <div className="ml-10">
+        <p className="text-gray-400 text-xl">Help planet please !</p>
+        <p className="text-gray-900 font-medium text-xl">
+          You're not ready to save the planet, Please connect your wallet.
+        </p>
+      </div>
+    </div>
+  );
+}

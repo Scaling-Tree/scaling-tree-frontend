@@ -24,30 +24,32 @@ export default function BottomNavbar() {
   ];
 
   return (
-    <div className="w-full h-20 bg-white border-t flex justify-between items-center px-96 shadow-2xl">
-      {navLeftItems.map((item, i) => (
-        <div
-          key={i}
-          className={`flex flex-col items-center justify-center  ${
-            isRouteActive(item.href) ? "text-green-400" : "text-gray-500"
-          }`}
-        >
-          <item.icon className="w-7 h-7 mb-1" />
-          <span className="text-sm font-medium">{item.name}</span>
-        </div>
-      ))}
-      <MdOutlineAddCircle className="text-green-400 w-14 h-14" />
-      {navRightItems.map((item, i) => (
-        <div
-          key={i}
-          className={`flex flex-col items-center justify-center  ${
-            isRouteActive(item.href) ? "text-green-400" : "text-gray-500"
-          }`}
-        >
-          <item.icon className="w-7 h-7 mb-1" />
-          <span className="text-sm font-medium">{item.name}</span>
-        </div>
-      ))}
+    <div className="bg-white h-20 border-t shadow-2xl">
+      <div className="max-w-[700px] h-full flex justify-between items-center mx-auto">
+        {navLeftItems.map((item, i) => (
+          <div
+            key={i}
+            className={`flex flex-col items-center justify-center  ${
+              isRouteActive(item.href) ? "text-green-400" : "text-gray-500"
+            }`}
+          >
+            <item.icon className="w-7 h-7 mb-1" />
+            <span className="text-sm font-medium">{item.name}</span>
+          </div>
+        ))}
+        <MdOutlineAddCircle className="text-green-400 w-14 h-14" />
+        {navRightItems.map((item, i) => (
+          <div
+            key={i}
+            className={`flex flex-col items-center justify-center  ${
+              isRouteActive(item.href) ? "text-green-400" : "text-gray-500"
+            }`}
+          >
+            <item.icon className="w-7 h-7 mb-1" />
+            <span className="text-sm font-medium">{item.name}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
