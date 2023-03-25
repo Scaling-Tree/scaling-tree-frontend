@@ -73,6 +73,10 @@ export default function TreeCard(props: PropsType) {
           {props.message}
           <span className="font-bold">warunsinx</span> Let&apos;s save pur
           planet with tree !
+          <span className="font-bold">
+            {props.operator.name || props.operator.address}
+          </span>{" "}
+          {props.message}
         </p>
         <div className="p-1 px-2 flex bg-green-400 text-white rounded-lg items-center justify-center">
           <p className="text-white mr-1">{props.treeNumber}</p>
