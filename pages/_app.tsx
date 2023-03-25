@@ -39,8 +39,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
+        <ToastContainer />
         <GraphPovider value={graphClient}>
-          <ToastContainer />
           <Component {...pageProps} />
         </GraphPovider>
       </RainbowKitProvider>
