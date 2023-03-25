@@ -7,6 +7,13 @@ import { goerli } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { Polybase } from "@polybase/client";
+import {
+  createClient as createGraphClient,
+  Provider as GraphPovider,
+} from "urql";
+import { graphExchange } from "@graphprotocol/client-urql";
+import * as GraphClient from "../.graphclient";
+import { config } from "@/config";
 
 const { chains, provider } = configureChains([goerli], [publicProvider()]);
 
@@ -21,11 +28,18 @@ const wagmiClient = createClient({
   provider,
 });
 
+const graphClient = createGraphClient({
+  url: config.graphUrl,
+  exchanges: [graphExchange(GraphClient)],
+});
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
+        <GraphPovider value={graphClient}>
+          <Component {...pageProps} />
+        </GraphPovider>
       </RainbowKitProvider>
     </WagmiConfig>
   );
