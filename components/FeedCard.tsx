@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { HiBadgeCheck } from "react-icons/hi";
 import { SiGumtree } from "react-icons/si";
 import axios from "axios";
+import Link from "next/link";
 
 const ADDED = "added";
 const TRANSFERRED = "transferred";
@@ -90,6 +91,13 @@ export default function FeedCard(props: PropsType) {
     }
   };
 
+  const getTreeLink = () => {
+    if (tree) {
+      return `/trees/${tree.id}`
+    }
+    return "#"
+  }
+
   const setFallbackImage = () => {
     setImageUrl(DEFAULT_IMG_URL);
   };
@@ -106,7 +114,11 @@ export default function FeedCard(props: PropsType) {
       <div className="flex items-center justify-between p-5">
         <div className="flex items-center">
           <div className="w-12 h-12 bg-gray-300 rounded-full">
-            <img src={DEFAULT_AVATAR} alt="avatar" className="w-12 h-12 rounded-full"/>
+            <img
+              src={DEFAULT_AVATAR}
+              alt="avatar"
+              className="w-12 h-12 rounded-full"
+            />
           </div>
           <div className="ml-3">
             <p className="font-bold text-gray-800">{actor?.id}</p>
@@ -127,14 +139,16 @@ export default function FeedCard(props: PropsType) {
         )}
       </div>
       <div className="w-full bg-gray-300">
-        {imageUrl && (
-          <img
-            src={imageUrl}
-            onError={() => setFallbackImage()}
-            alt="NFT image"
-            className="w-full"
-          />
-        )}
+        <Link href={getTreeLink()}>
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              onError={() => setFallbackImage()}
+              alt="NFT image"
+              className="w-full"
+            />
+          )}
+        </Link>
       </div>
       <div className="flex items-center justify-between p-5">
         <p>

@@ -6,6 +6,9 @@ query TreeQuery($id: ID = "0x16b41e517d8db1260683e421b5ea6472fb4d234a-3", $first
     createdTxHash
     updatedAt
     updatedTxHash
+    owner {
+      id
+    }
     nft {
       id
       tokenUri
