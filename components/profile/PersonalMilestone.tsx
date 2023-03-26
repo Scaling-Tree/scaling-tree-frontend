@@ -7,7 +7,8 @@ import {
 import { nFormatter } from "@/utils/numberFormat";
 import { config } from "@/config";
 
-const GLOBAL_MILESTONE = config.globalMilestone;
+const PersonalMilestoneNum = 1500;
+const GLOBAL_MILESTONE = PersonalMilestoneNum;
 
 type PropsType = {
   currentMilestone: number;

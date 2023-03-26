@@ -4,7 +4,7 @@ import { SiGumtree } from "react-icons/si";
 
 type User = {
   name?: string;
-  address: string;
+  address?: string;
 };
 
 type Report = {
