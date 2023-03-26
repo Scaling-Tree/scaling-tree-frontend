@@ -1,5 +1,6 @@
 query ProfileQuery(
   $id: ID = "0xe87b15cca8982d5b4121765e439d91f57c14f8c1"
+  $minAudit: BigInt = 0
   $first: Int = 100
   $skip: Int = 0
 ) {
@@ -13,6 +14,7 @@ query ProfileQuery(
       skip: $skip
       orderBy: updatedAt
       orderDirection: desc
+      where: { reportCount_gte: $minAudit }
     ) {
       id
       tokenId
@@ -22,6 +24,10 @@ query ProfileQuery(
       createdTxHash
       updatedAt
       updatedTxHash
+      reportCount
+      owner {
+        id
+      }
       reports(first: 1, orderBy: timestamp, orderDirection: desc) {
         id
         auditor {
@@ -29,6 +35,7 @@ query ProfileQuery(
         }
         transactionHash
         treeNumber
+        timestamp
       }
     }
   }

@@ -28,7 +28,7 @@ export default function PersonalMilestone({
     <div className="bg-white shadow-sm w-full mt-5 rounded-xl flex flex-col p-7 px-10">
       <div className="mb-7 flex items-center justify-between">
         <div>
-          <p className="font-bold text-2xl">PersonalMilestone</p>
+          <p className="font-bold text-2xl">Personal Milestone</p>
           <p className="text-gray-400">Have you planted a tree today ?</p>
         </div>
         <div className="bg-gray-100 rounded-lg flex items-center justify-center p-1 space-x-3">

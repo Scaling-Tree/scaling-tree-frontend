@@ -24,7 +24,8 @@ import PersonalMilestone from "@/components/profile/PersonalMilestone";
 import TreeCard from "@/components/TreeCard";
 import { config } from "@/config";
 import { useQuery } from "urql";
-import { ProfileQueryDocument, Owner } from "@/.graphclient";
+import { ProfileQueryDocument, Owner, Tree } from "@/.graphclient";
+import TreeDetailCard from "../components/TreeDetailCard";
 
 export default function ProfileView() {
   const { address, connector, isConnected } = useAccount();
@@ -38,6 +39,7 @@ export default function ProfileView() {
     query: ProfileQueryDocument,
     variables: {
       id: address,
+      minAudit: isAudit ? 1 : 0,
       first: config.pageSize,
       skip,
     },
@@ -49,8 +51,6 @@ export default function ProfileView() {
   const auditedTrees = data?.owner?.auditedTrees || 0;
   const currentMilestone = isAudit ? auditedTrees : totalTrees;
 
-  console.log(data);
-
   return (
     <div className="max-w-[1000px] mx-auto">
       <ProfileBanner />
@@ -60,7 +60,7 @@ export default function ProfileView() {
         currentMilestone={currentMilestone}
       />
       {data?.owner?.ownedTrees.map((tree, i) => (
-        <div></div>
+        <TreeDetailCard key={i} tree={tree as Tree} />
       ))}
       <div className="mt-5" />
     </div>
