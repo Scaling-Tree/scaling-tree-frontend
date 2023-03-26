@@ -1,0 +1,25 @@
+query TreeQuery {
+  trees(where: { isActive: true }) {
+    createdAt
+    createdTxHash
+    id
+    nft {
+      id
+      tokenUri
+    }
+    nftAddress
+    tokenId
+    owner {
+      id
+    }
+    reports {
+      auditor {
+        id
+      }
+      timestamp
+      treeNumber
+    }
+    updatedAt
+    treeNumber
+  }
+}

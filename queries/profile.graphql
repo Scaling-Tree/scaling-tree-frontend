@@ -1,0 +1,26 @@
+query ProfileQuery($id: ID = "0xe87b15cca8982d5b4121765e439d91f57c14f8c1", $first: Int = 100, $skip: Int = 0) {
+  owner(id: $id) {
+    id
+    auditedTrees
+    totalTrees
+    isAuditor
+    ownedTrees(first: $first, skip: $skip, orderBy: updatedAt, orderDirection: desc) {
+      id
+      tokenId
+      nftAddress
+      treeNumber
+      createdAt
+      createdTxHash
+      updatedAt
+      updatedTxHash
+      nft {
+        id
+        tokenUri
+      }
+    }
+  }
+  app(id: "app") {
+    auditedTrees
+    totalTrees
+  }
+}

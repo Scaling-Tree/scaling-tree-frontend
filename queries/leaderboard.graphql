@@ -1,0 +1,15 @@
+query LeaderboardQuery($first: Int = 100, $skip: Int = 0) {
+  owners(
+    first: $first
+    skip: $skip
+    orderBy: auditedTrees
+    orderDirection: desc
+    where: {auditedTrees_gt: "0"}
+  ) {
+    id
+    auditedTrees
+  }
+  app(id: "app") {
+    auditedTrees
+  }
+}
