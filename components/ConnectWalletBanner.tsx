@@ -13,7 +13,7 @@ export default function ConnectWalletBanner() {
       <div className="ml-10">
         <p className="text-gray-400 text-xl">Help planet please !</p>
         <p className="text-gray-900 font-medium text-xl">
-          You're not ready to save the planet, Please connect your wallet.
+          You are not ready to save the planet, Please connect your wallet.
         </p>
       </div>
     </div>
