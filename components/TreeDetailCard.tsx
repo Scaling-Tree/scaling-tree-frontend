@@ -103,7 +103,7 @@ export default function TreeDetailCard(props: PropsType) {
         <p className="flex items-center space-x-2">
           {onAudit && (
             <button
-              className={`p-2 px-2 flex text-white rounded-lg items-center justify-center font-bold  bg-green-40`}
+              className={`p-2 px-2 flex text-white rounded-lg items-center justify-center font-bold  bg-green-400`}
               onClick={() => onAudit(tree.id)}
               disabled={!onAudit || isLoading}
             >
