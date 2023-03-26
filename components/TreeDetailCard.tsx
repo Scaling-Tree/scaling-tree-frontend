@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { HiBadgeCheck } from "react-icons/hi";
 import { SiGumtree } from "react-icons/si";
 import axios from "axios";
+import Spinner from "./Spinner";
 
 const DEFAULT_IMG_URL = `/images/3-trees.webp`;
 const DEFAULT_AVATAR = `/images/bored-ape.jpeg`;
@@ -16,11 +17,12 @@ type NFTMetadata = {
 
 type PropsType = {
   tree: Tree;
+  isLoading?: boolean;
   onAudit?: (id: string) => void;
 };
 
 export default function TreeDetailCard(props: PropsType) {
-  const { tree, onAudit } = props;
+  const { tree, isLoading, onAudit } = props;
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -101,12 +103,15 @@ export default function TreeDetailCard(props: PropsType) {
         <p className="flex items-center space-x-2">
           {onAudit && (
             <button
-              className={`p-2 px-2 flex text-white rounded-lg items-center justify-center font-bold ${
-                isAudit ? "bg-green-400" : "bg-gray-400"
-              }`}
+              className={`p-2 px-2 flex text-white rounded-lg items-center justify-center font-bold  bg-green-40`}
               onClick={() => onAudit(tree.id)}
+              disabled={!onAudit || isLoading}
             >
-              <p className="text-white mr-1">Audit</p>
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <p className="text-white mr-1">Audit</p>
+              )}
             </button>
           )}
           <a
