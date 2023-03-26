@@ -1,0 +1,52 @@
+query Feed($first: Int = 100, $skip: Int = 0) {
+  feeds(first: $first, skip: $skip, orderBy: timestamp, orderDirection: desc) {
+    id
+    timestamp
+    txHash
+    type
+    auditor {
+      id
+      isActive
+    }
+    from {
+      id
+      isAuditor
+      totalTrees
+      auditedTrees
+    }
+    owner {
+      id
+      auditedTrees
+      isAuditor
+      totalTrees
+    }
+    report {
+      id
+      timestamp
+      transactionHash
+      treeNumber
+    }
+    to {
+      auditedTrees
+      id
+      isAuditor
+      totalTrees
+    }
+    tree {
+      createdAt
+      createdTxHash
+      id
+      isActive
+      nftAddress
+      reportCount
+      tokenId
+      treeNumber
+      updatedAt
+      updatedTxHash
+      nft {
+        id
+        tokenUri
+      }
+    }
+  }
+}
