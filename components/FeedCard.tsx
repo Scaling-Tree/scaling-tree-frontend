@@ -5,6 +5,7 @@ import { HiBadgeCheck } from "react-icons/hi";
 import { SiGumtree } from "react-icons/si";
 import axios from "axios";
 import Link from "next/link";
+import { useProfileWithAddr } from "../hooks/useProfileWithAddr";
 
 const ADDED = "added";
 const TRANSFERRED = "transferred";
@@ -33,6 +34,8 @@ type PropsType = {
 
 export default function FeedCard(props: PropsType) {
   const { owner, auditor, from, to, tree, report, timestamp } = props;
+
+  const { profile, setProfile } = useProfileWithAddr(owner?.id.toLowerCase());
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -93,10 +96,10 @@ export default function FeedCard(props: PropsType) {
 
   const getTreeLink = () => {
     if (tree) {
-      return `/trees/${tree.id}`
+      return `/trees/${tree.id}`;
     }
-    return "#"
-  }
+    return "#";
+  };
 
   const setFallbackImage = () => {
     setImageUrl(DEFAULT_IMG_URL);
@@ -109,19 +112,23 @@ export default function FeedCard(props: PropsType) {
   const actor = getActor();
   const isAudit = tree?.reportCount > 0;
 
+  useEffect(() => {}, [profile.profileImgUrl, profile.name]);
+
   return (
     <div className="bg-white w-full mt-5 rounded-lg shadow">
       <div className="flex items-center justify-between p-5">
         <div className="flex items-center">
           <div className="w-12 h-12 bg-gray-300 rounded-full">
             <img
-              src={DEFAULT_AVATAR}
+              src={profile.profileImgUrl || DEFAULT_AVATAR}
               alt="avatar"
               className="w-12 h-12 rounded-full"
             />
           </div>
           <div className="ml-3">
-            <p className="font-bold text-gray-800">{actor?.id}</p>
+            <p className="font-bold text-gray-800">
+              {profile.name || actor?.id}
+            </p>
             <p className="text-sm text-gray-500">
               {formatDate(new Date(timestamp * 1000))}
             </p>

@@ -22,6 +22,8 @@ import { ethers } from "ethers";
 import Image from "next/image";
 import { useProfile } from "@/hooks/useProfile";
 import getDb from "@/utils/getDb";
+import MainButton from "../MainButton";
+import Spinner from "../Spinner";
 
 export default function ProfileBanner() {
   const { address, connector, isConnected } = useAccount();
@@ -279,7 +281,7 @@ export default function ProfileBanner() {
                             if (address && username) {
                               await db
                                 .collection("User")
-                                .record(address)
+                                .record(address.toLocaleLowerCase())
                                 .call("setName", [username]);
                               setDisplayName(username);
                             }
@@ -298,7 +300,7 @@ export default function ProfileBanner() {
 
                                 await db
                                   .collection("User")
-                                  .record(address)
+                                  .record(address.toLocaleLowerCase())
                                   .call("setProfileImgUrl", [file.message]);
                                 setDisplayProfileImg(file.message);
                               }
@@ -308,30 +310,7 @@ export default function ProfileBanner() {
                           }}
                           className="ml-3 border border-green-400 bg-green-400 active:bg-gray-100 text-white font-semibold px-4 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 hover:opacity-80"
                         >
-                          {isSubmitting ? (
-                            <svg
-                              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                              ></circle>
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8v8z"
-                              ></path>
-                            </svg>
-                          ) : (
-                            "Update"
-                          )}
+                          {isSubmitting ? "Loading..." : "Update"}
                         </button>
                       </div>
                     </div>

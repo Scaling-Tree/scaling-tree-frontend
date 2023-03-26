@@ -21,7 +21,10 @@ export function useProfile() {
       if (address) {
         const db = getDb();
         const collectionReference = db.collection("User");
-        const { data, block } = await collectionReference.record(address).get();
+        const { data, block } = await collectionReference
+          .record(address.toLocaleLowerCase())
+          .get();
+        console.log({ x: data });
         let profileToSet = { ...profile };
         if (data?.name) {
           profileToSet.name = data.name;
@@ -39,7 +42,10 @@ export function useProfile() {
       if (address) {
         try {
           const db = getDb();
-          const user = await db.collection("User").record(address).get();
+          const user = await db
+            .collection("User")
+            .record(address.toLowerCase())
+            .get();
         } catch (e) {
           const db = getDb();
           if (signer) {
@@ -49,7 +55,7 @@ export function useProfile() {
                 sig: await signer.signMessage(data),
               };
             });
-            await db.collection("User").create([address]);
+            await db.collection("User").create([address.toLowerCase()]);
             console.log("user created");
           }
         }

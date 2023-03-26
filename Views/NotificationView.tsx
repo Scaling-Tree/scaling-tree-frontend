@@ -122,47 +122,11 @@ export default function NotificationView() {
 
   return (
     <div className="max-w-[1000px] mx-auto">
-      {notifications.map((oneNotification, i) => {
-        const {
-          cta,
-          title,
-          message,
-          app,
-          icon,
-          image,
-          url,
-          blockchain,
-          secret,
-          notification,
-          sid,
-        } = oneNotification;
-
-        return (
-          <NotificationItem
-            key={`notif-${sid}`}
-            notificationTitle={secret ? notification["title"] : title}
-            notificationBody={secret ? notification["body"] : message}
-            cta={cta}
-            app={app}
-            icon={icon}
-            image={image}
-            url={url}
-            theme={"light"}
-            chainName={blockchain as chainNameType}
-          />
-        );
-      })}
-      <div
-        className="max-w-[1000px] mx-auto"
-        style={{
-          position: "sticky",
-          bottom: "12vh",
-        }}
-      >
-        <div className="flex items-center justify-between">
+      <div className="">
+        <div className="flex items-center justify-between mt-5">
           <input
             type={"text"}
-            className={"border-2 border-gray-300 p-2 rounded-md w-full"}
+            className={"border-2 border-gray-300 p-2 rounded-xl w-full"}
             placeholder={"Enter your message"}
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
@@ -196,12 +160,42 @@ export default function NotificationView() {
                 await fetchNotifs(address);
               }
             }}
-            className="ml-3 bg-green-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="ml-3 bg-green-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
           >
-            send
+            Send
           </button>
         </div>
       </div>
+      {notifications.map((oneNotification, i) => {
+        const {
+          cta,
+          title,
+          message,
+          app,
+          icon,
+          image,
+          url,
+          blockchain,
+          secret,
+          notification,
+          sid,
+        } = oneNotification;
+
+        return (
+          <NotificationItem
+            key={`notif-${sid}`}
+            notificationTitle={secret ? notification["title"] : title}
+            notificationBody={secret ? notification["body"] : message}
+            cta={cta}
+            app={app}
+            icon={icon}
+            image={image}
+            url={url}
+            theme={"light"}
+            chainName={blockchain as chainNameType}
+          />
+        );
+      })}
     </div>
   );
 }

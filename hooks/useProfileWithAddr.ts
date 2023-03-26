@@ -21,7 +21,9 @@ export function useProfileWithAddr(address: string) {
       if (address) {
         const db = getDb();
         const collectionReference = db.collection("User");
-        const { data, block } = await collectionReference.record(address).get();
+        const { data, block } = await collectionReference
+          .record(address.toLowerCase())
+          .get();
         let profileToSet = { ...profile };
         if (data?.name) {
           profileToSet.name = data.name;
@@ -34,28 +36,28 @@ export function useProfileWithAddr(address: string) {
     })();
   }, [address]);
 
-  useEffect(() => {
-    (async () => {
-      if (address) {
-        try {
-          const db = getDb();
-          const user = await db.collection("User").record(address).get();
-        } catch (e) {
-          const db = getDb();
-          if (signer) {
-            db.signer(async (data: string) => {
-              return {
-                h: "eth-personal-sign",
-                sig: await signer.signMessage(data),
-              };
-            });
-            await db.collection("User").create([address]);
-            console.log("user created");
-          }
-        }
-      }
-    })();
-  }, [address, signer]);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (address) {
+  //       try {
+  //         const db = getDb();
+  //         const user = await db.collection("User").record(address).get();
+  //       } catch (e) {
+  //         const db = getDb();
+  //         if (signer) {
+  //           db.signer(async (data: string) => {
+  //             return {
+  //               h: "eth-personal-sign",
+  //               sig: await signer.signMessage(data),
+  //             };
+  //           });
+  //           await db.collection("User").create([address]);
+  //           console.log("user created");
+  //         }
+  //       }
+  //     }
+  //   })();
+  // }, [address, signer]);
 
   // useEffect(() => {
   //   (async () => {
