@@ -19,7 +19,7 @@ export default function NotificationView() {
   const { address, connector, isConnected } = useAccount();
   const { data: signer } = useSigner();
   const isMounted = useIsMounted();
-  const channelAddress = "0x05cd35f8d7011b42ef579ccab9d6982cdd9f24cd";
+  const channelAddress = process.env.NEXT_PUBLIC_PUSH_CHANNEL_ID;
 
   const fetchNotifs = async (address: string) => {
     const _notifications = await PushAPI.user.getFeeds({
