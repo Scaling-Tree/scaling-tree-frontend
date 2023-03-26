@@ -1,10 +1,9 @@
-import HomeView from "@/Views/HomeView";
 import MainLayout from "../components/Layout/MainLayout";
 
-export default function Home() {
+export default function Notification() {
   return (
     <MainLayout>
-      <HomeView />
+      <div></div>
     </MainLayout>
   );
 }
