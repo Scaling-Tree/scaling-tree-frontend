@@ -1,15 +1,21 @@
-query LeaderboardQuery($first: Int = 100, $skip: Int = 0) {
+query LeaderboardQuery(
+  $first: Int = 100
+  $skip: Int = 0
+  $minAudited: BigInt = 0
+) {
   owners(
     first: $first
     skip: $skip
     orderBy: auditedTrees
     orderDirection: desc
-    where: {auditedTrees_gt: "0"}
+    where: { auditedTrees_gte: $minAudited }
   ) {
     id
     auditedTrees
+    totalTrees
   }
   app(id: "app") {
     auditedTrees
+    totalTrees
   }
 }
