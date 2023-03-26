@@ -1,14 +1,10 @@
-query LeaderboardQuery(
-  $first: Int = 100
-  $skip: Int = 0
-  $minAudited: BigInt = 0
-) {
+query LeaderboardQuery($first: Int = 100, $skip: Int = 0, $minAudited: BigInt = 0) {
   owners(
     first: $first
     skip: $skip
     orderBy: auditedTrees
     orderDirection: desc
-    where: { auditedTrees_gte: $minAudited }
+    where: {auditedTrees_gte: $minAudited}
   ) {
     id
     auditedTrees

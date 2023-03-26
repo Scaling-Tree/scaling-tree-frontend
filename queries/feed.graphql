@@ -1,5 +1,11 @@
-query Feed($first: Int = 100, $skip: Int = 0) {
-  feeds(first: $first, skip: $skip, orderBy: timestamp, orderDirection: desc) {
+query FeedQuery($first: Int = 100, $skip: Int = 0, $minReports: BigInt = 0) {
+  feeds(
+    first: $first
+    skip: $skip
+    orderBy: timestamp
+    orderDirection: desc
+    where: {tree_: {reportCount_gte: $minReports}}
+  ) {
     id
     timestamp
     txHash
@@ -47,6 +53,18 @@ query Feed($first: Int = 100, $skip: Int = 0) {
         id
         tokenUri
       }
+      owner {
+        id
+      }
+      reports(first: 1, orderBy: timestamp, orderDirection: desc) {
+        id
+        timestamp
+        treeNumber
+      }
     }
+  }
+  app(id: "app") {
+    totalTrees
+    auditedTrees
   }
 }
