@@ -6,7 +6,7 @@ import {
   BiNotification,
   BiUserCircle,
 } from "react-icons/bi";
-import { MdOutlineAddCircle } from "react-icons/md";
+import CreateModal from "../create/CreateModal";
 
 export default function BottomNavbar() {
   const router = useRouter();
@@ -40,7 +40,7 @@ export default function BottomNavbar() {
             <span className="text-sm font-medium">{item.name}</span>
           </div>
         ))}
-        <MdOutlineAddCircle className="text-green-400 w-14 h-14" />
+        <CreateModal />
         {navRightItems.map((item, i) => (
           <div
             key={i}

@@ -20,11 +20,16 @@ import { useIsMounted } from "@/hooks";
 import { Dialog, Transition } from "@headlessui/react";
 import { ethers } from "ethers";
 import ProfileBanner from "@/components/profile/ProfileBanner";
+import PersonalMilestone from "@/components/profile/PersonalMilestone";
+import TreeCard from "@/components/TreeCard";
 
 export default function ProfileView() {
   return (
     <div className="max-w-[1000px] mx-auto">
       <ProfileBanner />
+      <PersonalMilestone />
+      <TreeCard />
+      <div className="mt-5" />
     </div>
   );
 }

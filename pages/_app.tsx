@@ -14,11 +14,13 @@ import {
 import { graphExchange } from "@graphprotocol/client-urql";
 import * as GraphClient from "../.graphclient";
 import { config } from "@/config";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const { chains, provider } = configureChains([goerli], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
-  appName: "My RainbowKit App",
+  appName: "ScalingTree",
   chains,
 });
 
@@ -37,6 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
+      <ToastContainer />
         <GraphPovider value={graphClient}>
           <Component {...pageProps} />
         </GraphPovider>

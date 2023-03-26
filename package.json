@@ -25,10 +25,13 @@
     "ethers": "^5.7.2",
     "graphql": "^16.6.0",
     "formidable": "^2.1.1",
+    "mime": "^3.0.0",
     "next": "13.2.4",
+    "nft.storage": "^7.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
+    "react-toastify": "^9.1.2",
     "typescript": "5.0.2",
     "urql": "^3.0.4",
     "wagmi": "^0.12.6"
