@@ -1,0 +1,33 @@
+query HomeQuery($first: Int = 100, $skip: Int = 0, $minReports: BigInt = 0) {
+  trees(
+    first: $first
+    skip: $skip
+    orderBy: updatedAt
+    orderDirection: desc
+    where: {reportCount_gte: $minReports}
+  ) {
+    id
+    owner {
+      id
+    }
+    reports(orderBy: timestamp, orderDirection: desc) {
+      id
+      auditor {
+        id
+      }
+      transactionHash
+      treeNumber
+      timestamp
+    }
+    reportCount
+    treeNumber
+    updatedAt
+    createdAt
+    updatedTxHash
+    createdTxHash
+  }
+  app(id: "app") {
+    totalTrees
+    auditedTrees
+  }
+}

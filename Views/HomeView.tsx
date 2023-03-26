@@ -1,4 +1,4 @@
-import { TreeQueryDocument } from "@/.graphclient";
+import { HomeQueryDocument } from "@/.graphclient";
 import ConnectWalletBanner from "@/components/ConnectWalletBanner";
 import TreeCard from "@/components/TreeCard";
 import WorldMilestone from "@/components/WorldMilestone";
@@ -6,7 +6,7 @@ import React from "react";
 import { useQuery } from "urql";
 
 export default function HomeView() {
-  const [result, reexecuteQuery] = useQuery({ query: TreeQueryDocument });
+  const [result, reexecuteQuery] = useQuery({ query: HomeQueryDocument });
 
   const { data, fetching, error } = result;
 
