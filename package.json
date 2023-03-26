@@ -23,7 +23,6 @@
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "ethers": "^5.7.2",
-    "graphql": "^16.6.0",
     "formidable": "^2.1.1",
     "mime": "^3.0.0",
     "graphql": "^16.6.0",
@@ -38,7 +37,6 @@
     "wagmi": "^0.12.6"
   },
   "devDependencies": {
-    "@graphprotocol/client-cli": "^2.2.20",
     "@types/formidable": "^2.0.5",
     "@graphprotocol/client-cli": "^2.2.20",
     "autoprefixer": "^10.4.14",
