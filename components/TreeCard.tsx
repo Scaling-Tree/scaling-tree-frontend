@@ -17,6 +17,7 @@ type PropsType = {
   operator: User;
   updatedAt: Date;
   treeNumber: number;
+  isAudited: boolean;
   reports: Report[];
   message: string;
 };
@@ -32,7 +33,7 @@ export default function TreeCard(props: PropsType) {
               {props.owner.name || props.owner.address}
             </p>
             <p className="text-sm text-gray-500">
-              {props.owner.name ? props.owner.address : ""}
+              {props.owner.name ? "" : props.owner.address}
             </p>
           </div>
         </div>
