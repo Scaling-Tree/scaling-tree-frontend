@@ -1,0 +1,28 @@
+query TreeQuery($id: ID = "0x16b41e517d8db1260683e421b5ea6472fb4d234a-3", $first: Int = 100, $skip: Int = 0) {
+  tree(id: $id) {
+    id
+    treeNumber
+    createdAt
+    createdTxHash
+    updatedAt
+    updatedTxHash
+    nft {
+      id
+      tokenUri
+    }
+    nftAddress
+    isActive
+    reportCount
+    tokenId
+    reports(first: $first, skip: $skip, orderBy: timestamp, orderDirection: desc) {
+      auditor {
+        id
+        isActive
+      }
+      id
+      timestamp
+      transactionHash
+      treeNumber
+    }
+  }
+}
