@@ -8,51 +8,16 @@ import axios from "axios";
 const DEFAULT_IMG_URL = `/images/3-trees.webp`;
 const DEFAULT_AVATAR = `/images/bored-ape.jpeg`;
 
-type NFTMetadata = {
-  name: string;
-  description: string;
-  image: string;
-};
-
 type PropsType = {
-  tree: Tree;
+  report: Report;
 };
 
-export default function TreeDetailCard(props: PropsType) {
-  const { tree } = props;
+export default function TreeAuditCard(props: PropsType) {
+  const { report } = props;
 
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-
-  const getImageUrl = async () => {
-    if (tree) {
-      try {
-        const metadata: NFTMetadata = await axios
-          .get(`${tree.nft.tokenUri}/metadata.json`)
-          .then((res) => res.data);
-        if (metadata.image) {
-          setImageUrl(
-            metadata.image.replace("ipfs://", "https://ipfs.io/ipfs/")
-          );
-        }
-      } catch (e) {
-        setImageUrl(DEFAULT_IMG_URL);
-        console.error("Error fetch nft data", e);
-      }
-    }
-  };
-
-  const setFallbackImage = () => {
-    setImageUrl(DEFAULT_IMG_URL);
-  };
-
-  useEffect(() => {
-    getImageUrl();
-  }, [tree]);
-
-  const owner = tree.owner;
-  const createdAt = tree.createdAt;
-  const reports = tree.reports;
-  const isAudit = tree.reportCount > 0;
+  const auditor = report.auditor;
+  const timestamp = report.timestamp;
+  const treeNumber = report.treeNumber;
 
   return (
     <div className="bg-white w-full mt-5 rounded-lg shadow">
@@ -66,23 +31,24 @@ export default function TreeDetailCard(props: PropsType) {
             />
           </div>
           <div className="ml-3">
-            <p className="font-bold text-gray-800">{owner.id}</p>
-            <p className="text-sm text-gray-500">
-              {formatDate(new Date(createdAt * 1000))}
-            </p>
+            <p className="font-bold text-gray-800">{auditor.id}</p>
+            {/* <p className="text-sm text-gray-500">
+              {formatDate(new Date(timestamp * 1000))}
+            </p> */}
           </div>
         </div>
-        {tree.reportCount > 0 && (
-          <div className="flex items-center text-gray-500">
-            <HiBadgeCheck className="text-green-400 mr-1 w-7 h-7" />
-            <p>
-              {reports.length > 0 &&
-                formatDate(new Date(reports[0].timestamp * 1000))}
-            </p>
+        <div className="flex items-center text-gray-500">
+          <HiBadgeCheck className="text-green-400 mr-1 w-7 h-7" />
+          <p className="mr-3">{formatDate(new Date(report.timestamp * 1000))}</p>
+          <div
+            className={`p-1 px-2 flex text-white rounded-lg items-center justify-center  bg-green-400`}
+          >
+            <p className="text-white mr-1">{treeNumber}</p>
+            <SiGumtree />
           </div>
-        )}
+        </div>
       </div>
-      <div className="w-full bg-gray-300">
+      {/* <div className="w-full bg-gray-300">
         {imageUrl && (
           <img
             src={imageUrl}
@@ -91,20 +57,18 @@ export default function TreeDetailCard(props: PropsType) {
             className="w-full"
           />
         )}
-      </div>
-      <div className="flex items-center justify-between p-5">
+      </div> */}
+      {/* <div className="flex items-center justify-between p-5">
         <p>
-          <span className="font-bold">{owner.id}</span> owns these trees
+          <span className="font-bold">{auditor.id}</span> audited trees
         </p>
         <div
-          className={`p-1 px-2 flex text-white rounded-lg items-center justify-center ${
-            isAudit ? "bg-green-400" : "bg-gray-400"
-          }`}
+          className={`p-1 px-2 flex text-white rounded-lg items-center justify-center  bg-green-400`}
         >
-          <p className="text-white mr-1">{tree && tree.treeNumber}</p>
+          <p className="text-white mr-1">{treeNumber}</p>
           <SiGumtree />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

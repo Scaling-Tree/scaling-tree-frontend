@@ -1,0 +1,6 @@
+query AuditorQuery($id: ID = "0xe87b15cca8982d5b4121765e439d91f57c14f8c1") {
+  auditor(id: $id) {
+    id
+    isActive
+  }
+}

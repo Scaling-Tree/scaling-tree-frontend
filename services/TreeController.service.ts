@@ -22,9 +22,18 @@ const mintNFT = async (signer: any, treeAmount: number, uri: string) => {
   return treeControllerContract.mintNFT(treeAmount, uri);
 };
 
+const audit = async (signer: any, nftAddress: string, tokenId: string, treeAmount: number) => {
+  const treeControllerContract = TreeController__factory.connect(
+    ADDRESS_LIST["TreeController"],
+    signer
+  );
+  return treeControllerContract.audit(nftAddress, tokenId, treeAmount);
+};
+
 const treeControllerService = {
   addNFT,
   mintNFT,
+  audit
 };
 
 export default treeControllerService;
