@@ -28,7 +28,7 @@ export default function ProfileView() {
     <div className="max-w-[1000px] mx-auto">
       <ProfileBanner />
       <PersonalMilestone />
-      <TreeCard />
+      {/* <TreeCard /> */}
       <div className="mt-5" />
     </div>
   );
