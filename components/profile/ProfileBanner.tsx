@@ -83,7 +83,7 @@ export default function ProfileBanner() {
         <div className="bg-white shadow-sm w-full mt-5 rounded-xl flex justify-between items-center p-7 px-10">
           {!isLoadingUsername && !isLoadingProfile && (
             <div className="flex justify-start items-center">
-              <div className="rounded-full w-[165px] h-[100px] bg-red-400 relative">
+              <div className="rounded-full w-[165px] h-[100px] relative">
                 <Image
                   className="rounded-full absolute"
                   src={displayProfileImg || "/images/icon_no_login.png"}

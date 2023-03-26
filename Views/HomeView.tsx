@@ -12,6 +12,8 @@ import WorldMilestone from "@/components/WorldMilestone";
 import { config } from "@/config";
 import React, { useState } from "react";
 import { useQuery } from "urql";
+import { useAccount } from "wagmi";
+import { useEffect } from "react";
 
 export default function HomeView() {
   const [page, setPage] = useState(0);
@@ -24,7 +26,7 @@ export default function HomeView() {
     variables: {
       first: config.pageSize,
       skip,
-      minReports: isAudit ? 1 : 0
+      minReports: isAudit ? 1 : 0,
     },
   });
 
@@ -34,9 +36,20 @@ export default function HomeView() {
   const auditedTrees = data?.app?.auditedTrees || 0;
   const currentMilestone = isAudit ? auditedTrees : totalTrees;
 
+  const [isDefinitelyConnected, setIsDefinitelyConnected] = useState(false);
+  const { address, isConnected } = useAccount();
+
+  useEffect(() => {
+    if (isConnected) {
+      setIsDefinitelyConnected(true);
+    } else {
+      setIsDefinitelyConnected(false);
+    }
+  }, [address]);
+
   return (
     <div className="max-w-[1000px] mx-auto">
-      <ConnectWalletBanner />
+      {isDefinitelyConnected ? <ConnectWalletBanner /> : null}
       <WorldMilestone
         title="World Milestone"
         isAudit={isAudit}
