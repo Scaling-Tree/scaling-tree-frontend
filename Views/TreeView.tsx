@@ -69,7 +69,7 @@ export default function TreeView() {
         signer,
         nftAddress,
         tokenId,
-        treeAmount
+        data!.tree!.treeNumber
       );
       await tx.wait();
       toast.success("🌳 Tree NFT Audited", {
