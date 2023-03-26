@@ -16,6 +16,7 @@ export default function NotificationView() {
   const [notifications, setNotifications] = React.useState([]);
   const [isSubscribed, setIsSubscribed] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [inputMessage, setInputMessage] = React.useState("");
   const { address, connector, isConnected } = useAccount();
   const { data: signer } = useSigner();
   const isMounted = useIsMounted();
@@ -151,6 +152,56 @@ export default function NotificationView() {
           />
         );
       })}
+      <div
+        className="max-w-[1000px] mx-auto"
+        style={{
+          position: "sticky",
+          bottom: "12vh",
+        }}
+      >
+        <div className="flex items-center justify-between">
+          <input
+            type={"text"}
+            className={"border-2 border-gray-300 p-2 rounded-md w-full"}
+            placeholder={"Enter your message"}
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+          />
+          <button
+            onClick={async () => {
+              if (signer && address) {
+                await PushAPI.payloads.sendNotification({
+                  signer: new ethers.Wallet(
+                    process.env.NEXT_PUBLIC_PUSH_ADMIN_PK as string,
+                    new ethers.providers.JsonRpcProvider(
+                      process.env.NEXT_PUBLIC_ALCHEMY_HTTPS
+                    )
+                  ),
+                  type: 1, // broadcast
+                  identityType: 2, // direct payload
+                  notification: {
+                    title: `${address}`,
+                    body: `${inputMessage}`,
+                  },
+                  payload: {
+                    title: `${address}`,
+                    body: `${inputMessage}`,
+                    cta: "",
+                    img: "",
+                  },
+                  channel: `eip155:5:${process.env.NEXT_PUBLIC_PUSH_CHANNEL_ID}`, // your channel address
+                  env: ENV.STAGING,
+                });
+                setInputMessage("");
+                await fetchNotifs(address);
+              }
+            }}
+            className="ml-3 bg-green-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            send
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
