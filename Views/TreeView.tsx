@@ -9,6 +9,7 @@ import {
 } from "@/.graphclient";
 import ConnectWalletBanner from "@/components/ConnectWalletBanner";
 import FeedCard from "@/components/FeedCard";
+import TreeAuditCard from "@/components/TreeAuditCard";
 import TreeCard from "@/components/TreeCard";
 import TreeDetailCard from "@/components/TreeDetailCard";
 import WorldMilestone from "@/components/WorldMilestone";
@@ -42,21 +43,39 @@ export default function TreeView() {
     setIsLoading(false);
   }, []);
 
+  // TODO: Check auditor
+  const isAuditor = false;
+
+  // TODO: Implement it
+  const handleAudit = (id: string) => {};
+
   const renderData = () => {
-    if (isLoading) return <div></div>
-    if (isLoading || fetching) return <div>Loading . . .</div>;
-    if (error) return <div>Something went wrong. Please try again</div>;
-    if (data && data.tree) return (
-      <div>
-        <TreeDetailCard tree={data.tree as Tree} />
-      </div>
-    )
-    return <div>Tree not found</div>;
+    if (!isLoading) {
+      if (fetching) return <div>Loading . . .</div>;
+      if (error) return <div>Something went wrong. Please try again</div>;
+      if (data && data.tree)
+        return (
+          <div>
+            {!isConnected && <ConnectWalletBanner />}
+            <TreeDetailCard
+              tree={data.tree as Tree}
+              onAudit={isAuditor ? (id) => handleAudit(id) : undefined}
+            />
+            <h3 className="mt-6 font-semibold">Audit reports</h3>
+            {data.tree.reports.map((report) => (
+              <div key={report.id}>
+                <TreeAuditCard report={report as Report} />
+              </div>
+            ))}
+          </div>
+        );
+    } else {
+      return <div>Loading . . .</div>;
+    }
   };
 
   return (
     <div className="max-w-[1000px] mx-auto">
-      {!isConnected && <ConnectWalletBanner />}
       {renderData()}
       <div className="mt-5" />
     </div>

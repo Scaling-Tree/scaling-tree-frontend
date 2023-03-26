@@ -16,10 +16,11 @@ type NFTMetadata = {
 
 type PropsType = {
   tree: Tree;
+  onAudit?: (id: string) => void;
 };
 
 export default function TreeDetailCard(props: PropsType) {
-  const { tree } = props;
+  const { tree, onAudit } = props;
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -42,8 +43,8 @@ export default function TreeDetailCard(props: PropsType) {
   };
 
   const getEtherscanLink = () => {
-    return `https://goerli.etherscan.io/tx/${tree.createdTxHash}`
-  }
+    return `https://goerli.etherscan.io/tx/${tree.createdTxHash}`;
+  };
 
   const setFallbackImage = () => {
     setImageUrl(DEFAULT_IMG_URL);
@@ -97,8 +98,24 @@ export default function TreeDetailCard(props: PropsType) {
         )}
       </div>
       <div className="flex items-center justify-between p-5">
-        <p>
-          <a href={getEtherscanLink()} className="font-bold text-blue-400" target="_blank">View on etherscan</a>
+        <p className="flex items-center space-x-2">
+          {onAudit && (
+            <button
+              className={`p-2 px-2 flex text-white rounded-lg items-center justify-center font-bold ${
+                isAudit ? "bg-green-400" : "bg-gray-400"
+              }`}
+              onClick={() => onAudit(tree.id)}
+            >
+              <p className="text-white mr-1">Audit</p>
+            </button>
+          )}
+          <a
+            href={getEtherscanLink()}
+            className="font-bold text-blue-400"
+            target="_blank"
+          >
+            View on etherscan
+          </a>
         </p>
         <div
           className={`p-1 px-2 flex text-white rounded-lg items-center justify-center ${
