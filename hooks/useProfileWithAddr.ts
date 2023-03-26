@@ -9,22 +9,21 @@ export interface Profile {
   profileImgUrl: string;
 }
 
-export function useProfile() {
+export function useProfileWithAddr(address: string) {
   const { data: signer, isError, isLoading: isLoadingUseSigner } = useSigner();
   const [profile, setProfile] = useState<Profile>({
     name: "",
     profileImgUrl: "",
   });
-  const { address, connector, isConnected } = useAccount();
+  // const { address, connector, isConnected } = useAccount();
   useEffect(() => {
     (async () => {
       if (address) {
         const db = getDb();
         const collectionReference = db.collection("User");
         const { data, block } = await collectionReference
-          .record(address.toLocaleLowerCase())
+          .record(address.toLowerCase())
           .get();
-        console.log({ x: data });
         let profileToSet = { ...profile };
         if (data?.name) {
           profileToSet.name = data.name;
@@ -37,31 +36,28 @@ export function useProfile() {
     })();
   }, [address]);
 
-  useEffect(() => {
-    (async () => {
-      if (address) {
-        try {
-          const db = getDb();
-          const user = await db
-            .collection("User")
-            .record(address.toLowerCase())
-            .get();
-        } catch (e) {
-          const db = getDb();
-          if (signer) {
-            db.signer(async (data: string) => {
-              return {
-                h: "eth-personal-sign",
-                sig: await signer.signMessage(data),
-              };
-            });
-            await db.collection("User").create([address.toLowerCase()]);
-            console.log("user created");
-          }
-        }
-      }
-    })();
-  }, [address, signer]);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (address) {
+  //       try {
+  //         const db = getDb();
+  //         const user = await db.collection("User").record(address).get();
+  //       } catch (e) {
+  //         const db = getDb();
+  //         if (signer) {
+  //           db.signer(async (data: string) => {
+  //             return {
+  //               h: "eth-personal-sign",
+  //               sig: await signer.signMessage(data),
+  //             };
+  //           });
+  //           await db.collection("User").create([address]);
+  //           console.log("user created");
+  //         }
+  //       }
+  //     }
+  //   })();
+  // }, [address, signer]);
 
   // useEffect(() => {
   //   (async () => {

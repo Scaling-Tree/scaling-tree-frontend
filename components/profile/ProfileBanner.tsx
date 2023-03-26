@@ -22,6 +22,8 @@ import { ethers } from "ethers";
 import Image from "next/image";
 import { useProfile } from "@/hooks/useProfile";
 import getDb from "@/utils/getDb";
+import MainButton from "../MainButton";
+import Spinner from "../Spinner";
 
 export default function ProfileBanner() {
   const { address, connector, isConnected } = useAccount();
@@ -82,19 +84,19 @@ export default function ProfileBanner() {
       <>
         <div className="bg-white shadow-sm w-full mt-5 rounded-xl flex justify-between items-center p-7 px-10">
           {!isLoadingUsername && !isLoadingProfile && (
-            <div className="flex justify-start">
-              <div className="px-4">
+            <div className="flex justify-start items-center">
+              <div className="rounded-full w-[165px] h-[100px] relative">
                 <Image
-                  className="shadow rounded-full max-w-full h-auto align-middle border-none"
+                  className="rounded-full absolute"
                   src={displayProfileImg || "/images/icon_no_login.png"}
                   alt="logo"
-                  height={400}
-                  width={200}
+                  layout="fill"
+                  objectFit="cover"
                 />
               </div>
               <div className="w-full px-4 flex flex-col justify-center">
                 <div>
-                  <p className="text-xl font-bold leading-normal mb-2 text-gray-800 mb-2">
+                  <p className="text-xl font-bold leading-normal mb-2 text-gray-800">
                     {displayName}
                   </p>
                   <p>
@@ -112,7 +114,7 @@ export default function ProfileBanner() {
               onClick={() => {
                 setIsOpen(true);
               }}
-              className="bg-green-400 active:bg-gray-100 text-white font-semibold px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="bg-green-400 active:bg-gray-100 text-white font-semibold px-4 py-2 rounded hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             >
               <span>Edit Profile</span>
             </button>
@@ -211,7 +213,7 @@ export default function ProfileBanner() {
                             <div className="flex items-center justify-center w-full">
                               <label
                                 htmlFor="dropzone-file"
-                                className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                                className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
                               >
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                   <svg
@@ -229,13 +231,13 @@ export default function ProfileBanner() {
                                       d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                                     />
                                   </svg>
-                                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                  <p className="mb-2 text-sm text-gray-500 ">
                                     <span className="font-semibold">
                                       Click to upload
                                     </span>{" "}
                                     or drag and drop
                                   </p>
-                                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                                  <p className="text-xs text-gray-500 ">
                                     SVG, PNG, JPG or GIF (MAX. 800x400px)
                                   </p>
                                 </div>
@@ -258,7 +260,7 @@ export default function ProfileBanner() {
                           onClick={() => {
                             setIsOpen(false);
                           }}
-                          className="active:bg-gray-100 text-balck font-semibold px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          className="active:bg-gray-100 text-balck font-semibold px-4 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 border hover:opacity-80"
                         >
                           Cancel
                         </button>
@@ -279,7 +281,7 @@ export default function ProfileBanner() {
                             if (address && username) {
                               await db
                                 .collection("User")
-                                .record(address)
+                                .record(address.toLocaleLowerCase())
                                 .call("setName", [username]);
                               setDisplayName(username);
                             }
@@ -298,7 +300,7 @@ export default function ProfileBanner() {
 
                                 await db
                                   .collection("User")
-                                  .record(address)
+                                  .record(address.toLocaleLowerCase())
                                   .call("setProfileImgUrl", [file.message]);
                                 setDisplayProfileImg(file.message);
                               }
@@ -306,32 +308,9 @@ export default function ProfileBanner() {
                             setIsSubmitting(false);
                             setIsOpen(false);
                           }}
-                          className="ml-3 bg-green-400 active:bg-gray-100 text-white font-semibold px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          className="ml-3 border border-green-400 bg-green-400 active:bg-gray-100 text-white font-semibold px-4 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 hover:opacity-80"
                         >
-                          {isSubmitting ? (
-                            <svg
-                              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                              ></circle>
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8v8z"
-                              ></path>
-                            </svg>
-                          ) : (
-                            "Update my profile"
-                          )}
+                          {isSubmitting ? "Loading..." : "Update"}
                         </button>
                       </div>
                     </div>

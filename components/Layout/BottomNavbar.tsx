@@ -5,6 +5,7 @@ import {
   BiTrophy,
   BiNotification,
   BiUserCircle,
+  BiChat,
 } from "react-icons/bi";
 import CreateModal from "../create/CreateModal";
 
@@ -19,7 +20,7 @@ export default function BottomNavbar() {
   ];
 
   const navRightItems = [
-    { name: "Notification", icon: BiNotification, href: "/notification" },
+    { name: "Chat", icon: BiChat, href: "/notification" },
     { name: "Profile", icon: BiUserCircle, href: "/profile" },
   ];
 

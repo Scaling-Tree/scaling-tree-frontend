@@ -1,9 +1,16 @@
 import Image from "next/image";
 import React from "react";
+import { useAccount } from "wagmi";
 
 export default function ConnectWalletBanner() {
+  const { address } = useAccount();
+
   return (
-    <div className="bg-white shadow-sm w-full mt-5 rounded-xl flex items-center p-7 px-10">
+    <div
+      className={`bg-white shadow-sm w-full mt-5 rounded-xl flex items-center p-7 px-10 ${
+        address ? "hidden" : "block"
+      }`}
+    >
       <Image
         src="/images/icon_no_login.png"
         alt="icon_no_login"

@@ -1,10 +1,19 @@
-import { HomeQueryDocument } from "@/.graphclient";
+import {
+  HomeQueryDocument,
+  FeedQueryDocument,
+  Owner,
+  Auditor,
+  Tree,
+  Report,
+} from "@/.graphclient";
 import ConnectWalletBanner from "@/components/ConnectWalletBanner";
-import TreeCard from "@/components/TreeCard";
+import FeedCard from "@/components/FeedCard";
 import WorldMilestone from "@/components/WorldMilestone";
 import { config } from "@/config";
 import React, { useState } from "react";
 import { useQuery } from "urql";
+import { useAccount } from "wagmi";
+import { useEffect } from "react";
 
 export default function HomeView() {
   const [page, setPage] = useState(0);
@@ -13,7 +22,7 @@ export default function HomeView() {
   const skip = page * config.pageSize;
 
   const [result, reexecuteQuery] = useQuery({
-    query: HomeQueryDocument,
+    query: FeedQueryDocument,
     variables: {
       first: config.pageSize,
       skip,
@@ -27,9 +36,20 @@ export default function HomeView() {
   const auditedTrees = data?.app?.auditedTrees || 0;
   const currentMilestone = isAudit ? auditedTrees : totalTrees;
 
+  const [isDefinitelyConnected, setIsDefinitelyConnected] = useState(false);
+  const { address, isConnected } = useAccount();
+
+  useEffect(() => {
+    if (isConnected) {
+      setIsDefinitelyConnected(true);
+    } else {
+      setIsDefinitelyConnected(false);
+    }
+  }, [address]);
+
   return (
     <div className="max-w-[1000px] mx-auto">
-      <ConnectWalletBanner />
+      {isDefinitelyConnected ? <ConnectWalletBanner /> : null}
       <WorldMilestone
         title="World Milestone"
         isAudit={isAudit}
@@ -37,19 +57,25 @@ export default function HomeView() {
         currentMilestone={currentMilestone}
       />
       {data &&
-        data.trees.map((tree) => (
-          <div key={tree.id}>
-            <TreeCard
-              owner={{ address: tree.owner.id, name: tree.owner.id }}
-              operator={{ address: tree.owner.id, name: tree.owner.id }}
-              updatedAt={new Date(tree.updatedAt)}
-              treeNumber={tree.treeNumber}
-              isAudited={tree.reportCount > 0}
-              reports={[]}
-              message={`Mint an NFT`}
-            />
-          </div>
-        ))}
+        data.feeds
+          .filter((feed) => feed.tree)
+          .map(
+            (feed) =>
+              feed.tree && (
+                <div key={feed.id}>
+                  <FeedCard
+                    type={feed.type}
+                    owner={feed.owner as Owner}
+                    auditor={feed.auditor as Auditor}
+                    from={feed.from as Owner}
+                    to={feed.to as Owner}
+                    tree={feed.tree as Tree}
+                    report={feed.report as Report}
+                    timestamp={feed.timestamp}
+                  />
+                </div>
+              )
+          )}
       <div className="mt-5" />
     </div>
   );
